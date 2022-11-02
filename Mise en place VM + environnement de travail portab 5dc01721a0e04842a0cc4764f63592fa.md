@@ -68,56 +68,49 @@ Avec la VM eteinte, dans virtualbox selectionner la VM → settings →display e
 
 Lancer la machine, ouvrir un terminal et log en tant que superuser (root)
 
-<aside>
-⌨️ su -l
-
-</aside>
+```
+su -l
+```
 
 (Optionnel : Ajouter un nouvel utilisateur, remplacer <username> par le nom sans chevrons)
 
-<aside>
-⌨️ adduser <username>
-
-</aside>
+```
+adduser <username>
+```
 
 On vous demande ensuite de choisir un mot de passe pour cet user et de remplir des informations optionnelles (possibilite de skip sans rien remplir)
 
 Ajouter l’utilisateur au group sudo 
 
-<aside>
-⌨️ usermod -aG sudo <username>
-
-</aside>
+```
+usermod -aG sudo <username>
+```
 
 Pour verifier que l’ajout a fonctionne, afficher les groupes de l’user et verifier la presence de sudo. 
 
-<aside>
-⌨️ groups <username>
-
-</aside>
+```
+groups <username>
+```
 
 ![VM_adduser.png](Mise%20en%20place%20VM%20+%20environnement%20de%20travail%20portab%205dc01721a0e04842a0cc4764f63592fa/VM_adduser.png)
 
 On passe sur l’user en question qui possede desormais les droits sudo
 
-<aside>
-⌨️ su - <username>
-
-</aside>
+```
+su - <username>
+```
 
 On cherche maintenant a installer les packages necessaires afin de gerer proprement l’affichage de la machine guest.
 
  
 
-<aside>
-⌨️ sudo apt update
+```
+sudo apt update
+```
 
-</aside>
-
-<aside>
-⌨️ sudo apt install build-essential dkms linux-headers-$(uname -r)
-
-</aside>
+```
+sudo apt install build-essential dkms linux-headers-$(uname -r)
+```
 
 “uname -r” nous donne la version de noyau linux sur laquelle est basee notre machine virtuelle. 
 
@@ -131,10 +124,9 @@ Afin de monter l’iso VboxGuestAdditions.iso , on retourne sur virtualbox, on s
 
 Une fois fait il faut reboot la VM
 
-<aside>
-⌨️ sudo reboot
-
-</aside>
+```
+sudo reboot
+```
 
 ---
 
@@ -142,17 +134,15 @@ Une fois la VM relancee, se connecter sur l’utilisateur possedant les droits s
 
 - On commence par creer le dossier
 
-<aside>
-⌨️ sudo mkdir /mnt/cdrom
-
-</aside>
+```
+sudo mkdir /mnt/cdrom
+```
 
 - On monte le disque dans ce nouveau dossier
 
-<aside>
-⌨️ sudo mount /dev/cdrom /mnt/cdrom
-
-</aside>
+```
+sudo mount /dev/cdrom /mnt/cdrom
+```
 
 On obtient alors ce message: 
 
@@ -160,30 +150,28 @@ On obtient alors ce message:
 
 On doit maintenant se rendre dans le dossier pour pouvoir lancer le script d’installation des guest additions.
 
-<aside>
-⌨️ cd /mnt/cdrom
+```
+cd /mnt/cdrom
+```
 
-</aside>
-
+ 
 Un “ls” dans ce dossier nous donne :
 
 ![VM_ls_mnt_cdrom.PNG](Mise%20en%20place%20VM%20+%20environnement%20de%20travail%20portab%205dc01721a0e04842a0cc4764f63592fa/VM_ls_mnt_cdrom.png)
 
 Lancer le script [VboxLinuxAdditions.run](http://VboxLinuxAdditions.run) avec l’option —nox11 (pour ne pas ouvrir de Xterm )
 
-<aside>
-⌨️ sudo sh ./VBoxLinuxAdditions.run —nox11
-
-</aside>
+```
+sudo sh ./VBoxLinuxAdditions.run —nox11
+```
 
 Une fois l’installation terminee (peut prendre un peu de temps suivant la machine) on nous demande de redemarrer la machine pour appliquer les effets des actions effectuees:
 
 ![VM_end_guest.PNG](Mise%20en%20place%20VM%20+%20environnement%20de%20travail%20portab%205dc01721a0e04842a0cc4764f63592fa/VM_end_guest.png)
 
-<aside>
-⌨️ sudo reboot
-
-</aside>
+```
+sudo reboot
+```
 
 Et voila ! Il est desormais possible de mettre la VM en full screen avec une mise a l’echelle automatique a la taille de l’ecran.
 
