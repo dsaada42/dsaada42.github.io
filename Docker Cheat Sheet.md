@@ -2,55 +2,49 @@
 
 - **docker pull <image_name>:<version>**
     
-    <aside>
-    ⌨️ docker pull debian:latest
-    
-    </aside>
+    ```
+    docker pull debian:latest
+    ```
     
     → Telecharge la derniere version de l’image debian
     
 - **docker ps**
     
-    <aside>
-    ⌨️ docker ps -a
-    
-    </aside>
+    ```
+    docker ps -a
+    ```
     
     → liste tous les conteneurs actifs ( -a pour lister les inactifs egalement)
     
 - **docker image**
     
-    <aside>
-    ⌨️ docker image ls
-    
-    </aside>
+    ```
+    docker image ls
+    ```
     
     → liste toutes les images presentes sur la machine
     
 - **docker volume**
     
-    <aside>
-    ⌨️ docker volume ls
-    
-    </aside>
+    ```
+    docker volume ls
+    ```
     
     → liste tous les volumes presents sur la machine
     
 - **docker network**
     
-    <aside>
-    ⌨️ docker network ls
-    
-    </aside>
+    ```
+    docker network ls
+    ```
     
     → liste tous les reseaux presents sur la machine
     
 - **docker run**
     
-    <aside>
-    ⌨️ docker run -tid -p 8080:80 —name webserver —env-file myenv.lst nginx:latest
-    
-    </aside>
+    ```
+    docker run -tid -p 8080:80 —name webserver —env-file myenv.lst nginx:latest
+    ```
     
     Docker run permet de lancer un conteneur depuis une image (ici on lance un containeur en mode interactif, tty et detach a partir de l’image nginx:latest , le nom du conteneur sera “webserver” , il communiquera avec l’hote via l’interface 8080:80 et importera ses variable d’environnement du fichier myenv.lst)
     
@@ -67,28 +61,25 @@
     - **—rm:** remove container after exit
 - **docker inspect**
     
-    <aside>
-    ⌨️ docker inspect <container_id>
-    
-    </aside>
+    ```
+    docker inspect <container_id>
+    ```
     
     Affiche toutes les caracteristiques du conteneur cible (PID/ ID / adresse IP / volumes / reseaux / etc)
     
 - **docker commit**
     
-    <aside>
-    ⌨️ docker commit -m <message> <conteneur(id ou name)> <image_name>:<version>
-    
-    </aside>
+    ```
+    docker commit -m <message> <conteneur(id ou name)> <image_name>:<version>
+    ```
     
     Assez similaire a git, permet de versionner notre image a partir de l’etat actuel d’un conteneur. On peut pull une image , la lancer dans un conteneur, la modifier , puis commit ces changements.  
     
     example:
     
-    <aside>
-    ⌨️ docker commit -m “webserver version 2” webserver:v2.0
-    
-    </aside>
+    ```
+    docker commit -m “webserver version 2” webserver:v2.0
+    ```
     
     Ici on cree une image du nom de webserver avec une version v2.0, il sera possible de la lancer avec un “docker run -tid webserver:v2.0” 
     
