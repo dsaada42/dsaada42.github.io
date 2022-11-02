@@ -1,6 +1,6 @@
 # Docker Cheat Sheet
 
-- **docker pull <image_name>:<version>**
+- **docker pull \<image_name\>:\<version\>**
     
     ```
     docker pull debian:latest
