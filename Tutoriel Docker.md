@@ -4,17 +4,15 @@
 
 Pour installer docker sur notre machine on lance une simple commande apt-get install (le -y permet d’accepter automatiquement les yes/no questions au cours de l’installation)
 
-<aside>
-⌨️ sudo apt-get install -y docker.io
-
-</aside>
+```
+sudo apt-get install -y docker.io
+```
 
 Une fois docker installe, on vérifie que l’installation s’est bien passée en listant les conteneurs présents (logiquement aucun pour le moment)
 
-<aside>
-⌨️ docker ps
-
-</aside>
+```
+docker ps
+```
 
 Il est possible qu’en lançant cette commande on obtienne l’erreur suivante:
 
@@ -22,33 +20,29 @@ Il est possible qu’en lançant cette commande on obtienne l’erreur suivante:
 
 Pour y remédier, il faut créer un groupe docker.
 
-<aside>
-⌨️ sudo groupadd docker
-
-</aside>
+```
+sudo groupadd docker
+```
 
 On y ajoute ensuite notre username.
 
-<aside>
-⌨️ sudo usermod -aG docker <username>
-
-</aside>
+```
+sudo usermod -aG docker <username>
+```
 
 On vérifie que tout s’est bien passe
 
-<aside>
-⌨️ groups <username>
-
-</aside>
+```
+groups <username>
+```
 
 ![Docker_groups.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_groups.png)
 
 On relog sur notre user afin de rafraichir l’évaluation des droits et pouvoir utiliser docker directement:
 
-<aside>
-⌨️ su - <username>
-
-</aside>
+```
+su - <username>
+```
 
 ![Docker_permission_ok.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_permission_ok.png)
 
@@ -56,9 +50,7 @@ On relog sur notre user afin de rafraichir l’évaluation des droits et pouvoir
 
 Pour plus de détails sur les commandes utilisées au cours de ce tutoriel , se référer a 
 
-Le but de ce cas pratique va être de mettre en place un environnement de travail docker sécurisé contenant une base de données , une application react basique et un serveur nginx.
-
- 
+Le but de ce cas pratique va être de mettre en place un environnement de travail docker sécurisé contenant une base de données , une application react basique et un serveur nginx. 
 
 # 3. Sécurité
 
@@ -68,17 +60,15 @@ Docker présente une faille potentielle de sécurité concernant les droits d’
 
 On va lancer un conteneur de test 
 
-<aside>
-⌨️ docker run -d —name test debian:buster sleep infinity
-
-</aside>
+```
+docker run -d —name test debian:buster sleep infinity
+```
 
 Le conteneur que l’on a lance en mode detach va exécuter la command “sleep infinity” et rester actif , on peut alors vérifier que cette command a bien été lancée en tant que root
 
-<aside>
-⌨️ ps aux | grep sleep
-
-</aside>
+```
+ps aux | grep sleep
+```
 
 ![Docker_security_sleep.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_security_sleep.png)
 
@@ -88,15 +78,13 @@ Pour éviter cela, on va prendre pour habitude d’isoler les conteneurs avec un
 
 - Le but ici est de limiter l’accès aux ressources de la machine hôte sans que le processus ne soit au courant. Pour cela on va créer un utilisateur et un groupe qui nous serviront a effectuer les actions de docker.
 
-<aside>
-⌨️ sudo groupadd -g 500000 dockremap
+```
+sudo groupadd -g 500000 dockremap
+```
 
-</aside>
-
-<aside>
-⌨️ sudo useradd -u 500000 -g dockremap
-
-</aside>
+```
+sudo useradd -u 500000 -g dockremap
+```
 
 Ici on aura un utilisateur et un groupe du même nom. Le nom dockremap n’est pas choisi au hasard, c’est le nom par défaut que docker recherchera.
 
@@ -110,15 +98,13 @@ Ici on aura un utilisateur et un groupe du même nom. Le nom dockremap n’est p
     - L’intérêt ici est de séparer les ID de la machine host de ceux de docker (ce qui n’est pas le cas en tant que root), ainsi l’UID0 ne correspondra a aucun ID réel de la machine host, réglant ainsi la faille de sécurité.
 - Maintenant que nous avons créé ce nouvel utilisateur et groupe, nous allons préciser dans les fichiers /etc/subuid et /etc/subgid la plage de ses ID:
 
-<aside>
-⌨️ echo  dockremap:500000:65536 | sudo tee -a /etc/subuid
+```
+echo  dockremap:500000:65536 | sudo tee -a /etc/subuid
+```
 
-</aside>
-
-<aside>
-⌨️ echo dockremap:500000:65536 | sudo tee -a /etc/subgid
-
-</aside>
+```
+echo dockremap:500000:65536 | sudo tee -a /etc/subgid
+```
 
 On utilise tee -a pour écrire en mode append dans le fichier nécessitant les droits sudo (sudo echo “something” >> file ne fonctionnerait pas)
 
@@ -139,22 +125,19 @@ On obtient le resultat
 
 Il ne nous reste plus qu’a prendre en compte ces modifications en demandant au systeme de reload le daemon puis de restart docker
 
-<aside>
-⌨️ sudo systemctl daemon-reload
+```
+sudo systemctl daemon-reload
+```
 
-</aside>
-
-<aside>
-⌨️ sudo systemctl restart docker
-
-</aside>
+```
+sudo systemctl restart docker
+```
 
 Il ne nous reste plus qu’a refaire la meme verification qu’au debut de cette section on relance un conteneur de test 
 
-<aside>
-⌨️ docker run -d —name test debian:buster sleep infinity
-
-</aside>
+```
+docker run -d —name test debian:buster sleep infinity
+```
 
 Le conteneur que l’on a lance en mode detach va exécuter la command “sleep infinity” et rester actif , on peut alors vérifier que cette command a bien été lancée en tant que dockremap et non plus root
 
