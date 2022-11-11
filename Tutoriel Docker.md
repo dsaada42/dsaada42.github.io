@@ -46,15 +46,27 @@ su - <username>
 
 ![Docker_permission_ok.PNG](Tutoriel%20Docker/Docker_permission_ok.png)
 
-# 2. Cas pratique de fonctionnement
+Une fois docker installe, nous allons installer docker-compose dans sa derniere version. Site officiel -> https://docs.docker.com/compose/install/other/
 
-Pour plus de détails sur les commandes utilisées au cours de ce tutoriel , se référer a 
+```
+curl -SL https://github.com/docker/compose/releases/download/v2.12.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+```
 
-Le but de ce cas pratique va être de mettre en place un environnement de travail docker sécurisé contenant une base de données , une application react basique et un serveur nginx. 
+On donne les droits d'execution
 
-# 3. Sécurité
+```
+chmod +x /usr/local/bin/docker-compose
+```
 
-### 3.1. Isolation de conteneurs
+Pour verifier que tout s'est bien deroule:
+```
+docker-compose --version
+```
+![docker_compose_version.PNG](Tutoriel%20Docker/docker_compose_version.png)
+
+# 2. Sécurité
+
+### 2.1. Isolation de conteneurs
 
 Docker présente une faille potentielle de sécurité concernant les droits d’accès: par défaut toutes les opérations effectuées via docker le sont en tant que root, on peut le vérifier assez simplement.
 
