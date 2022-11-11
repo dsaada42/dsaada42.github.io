@@ -16,7 +16,7 @@ docker ps
 
 Il est possible qu’en lançant cette commande on obtienne l’erreur suivante:
 
-![Docker_permission.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_permission.png)
+![Docker_permission.PNG](Tutoriel%20Docker/Docker_permission.png)
 
 Pour y remédier, il faut créer un groupe docker.
 
@@ -36,7 +36,7 @@ On vérifie que tout s’est bien passe
 groups <username>
 ```
 
-![Docker_groups.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_groups.png)
+![Docker_groups.PNG](Tutoriel%20Docker/Docker_groups.png)
 
 On relog sur notre user afin de rafraichir l’évaluation des droits et pouvoir utiliser docker directement:
 
@@ -44,7 +44,7 @@ On relog sur notre user afin de rafraichir l’évaluation des droits et pouvoir
 su - <username>
 ```
 
-![Docker_permission_ok.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_permission_ok.png)
+![Docker_permission_ok.PNG](Tutoriel%20Docker/Docker_permission_ok.png)
 
 # 2. Cas pratique de fonctionnement
 
@@ -70,7 +70,7 @@ Le conteneur que l’on a lance en mode detach va exécuter la command “sleep 
 ps aux | grep sleep
 ```
 
-![Docker_security_sleep.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_security_sleep.png)
+![Docker_security_sleep.PNG](Tutoriel%20Docker/Docker_security_sleep.png)
 
 On voit ici que la commande est bien lancée en tant que root. Le problème avec ce comportement c’est qu’il suffirait d’accéder au conteneur pour avoir un accès superuser (root) a la machine host.
 
@@ -91,7 +91,7 @@ Ici on aura un utilisateur et un groupe du même nom. Le nom dockremap n’est p
 - Les notions de “remapping” et de “subordinate user ID” / “subordinate gourp ID” sont nécessaires pour bien comprendre la manière de résoudre la faille de sécurité:
     - les fichiers /etc/subuid et /etc/subgid contiennent sur ma machine possédant deux utilisateurs:
         
-        ![Docker_security_subid.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_security_subid.png)
+        ![Docker_security_subid.PNG](Tutoriel%20Docker/Docker_security_subid.png)
         
         pour chaque utilisateur ou groupe on a 3 informations : le nom , le numéro d’ID de départ et la taille de la range: myuser pourra utiliser 65536 ID successifs , le premier utilisable (UID0) étant 165536.
         
@@ -121,7 +121,7 @@ On utilise tee -a pour écrire en mode append dans le fichier nécessitant les d
 
 On obtient le resultat 
 
-![Docker_security_daemonjson.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_security_daemonjson.png)
+![Docker_security_daemonjson.PNG](Tutoriel%20Docker/Docker_security_daemonjson.png)
 
 Il ne nous reste plus qu’a prendre en compte ces modifications en demandant au systeme de reload le daemon puis de restart docker
 
@@ -146,6 +146,6 @@ Le conteneur que l’on a lance en mode detach va exécuter la command “sleep 
 
 </aside>
 
-![Docker_security_dockremap.PNG](Tutoriel%20Docker%20bb0c7aea1ba74440b1a5e8971cc82e51/Docker_security_dockremap.png)
+![Docker_security_dockremap.PNG](Tutoriel%20Docker/Docker_security_dockremap.png)
 
 On retrouve cette fois l’ID 500000 ( equivalent a UID 0 de dockremap user) , en cas d’attaque sur le conteneur, un accès a root reviendrait a accéder a un ID 500 000 ne faisant référence a aucun processus sur la machine host.
