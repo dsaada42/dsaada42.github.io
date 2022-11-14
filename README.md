@@ -13,3 +13,19 @@ Enjoy and feel free to comment or suggest any change that might be relevant.
 [Docker Cheat Sheet](https://dsaada42.github.io/Docker%20Cheat%20Sheet)
 
 [Docker Installation Tutorial](https://dsaada42.github.io/Tutoriel%20Docker)
+
+Useful links for Inception 42 project:
+
+- Wordpress:
+[How to install WP-CLI](https://www.liquidweb.com/kb/install-wp-cli/)
+[How to configure wordpress (wp-config.php)](https://fr.wordpress.org/support/article/editing-wp-config-php/)
+- PHP-FPM:
+[Introduction to php-fpm](https://tideways.com/profiler/blog/an-introduction-to-php-fpm-tuning)
+[php-fpm linked to nginx](https://www.digitalocean.com/community/tutorials/php-fpm-nginx)
+- Nginx:
+[Create an nginx image from scratch](https://www.baeldung.com/linux/nginx-docker-container)
+- MariaDB:
+[Install mariadb](https://linuxize.com/post/how-to-install-mariadb-on-debian-10/)
+
+Very useful link :
+[Wordpress + apache + mariadb](https://www.inmotionhosting.com/support/edu/wordpress/install-wordpress-debian-10/)
